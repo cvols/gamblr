@@ -4,9 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { GlobalState } from './context/GlobalState';
+import reducer, { initialState } from './context/reducer';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <GlobalState initialState={initialState} reducer={reducer}>
+      <App />
+    </GlobalState>
   </React.StrictMode>,
   document.getElementById('root')
 );
