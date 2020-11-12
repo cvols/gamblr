@@ -8,11 +8,9 @@ import { GlobalState } from './context/GlobalState';
 import reducer, { initialState } from './context/reducer';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <GlobalState initialState={initialState} reducer={reducer}>
-      <App />
-    </GlobalState>
-  </React.StrictMode>,
+  <GlobalState initialState={initialState} reducer={reducer}>
+    <App />
+  </GlobalState>,
   document.getElementById('root')
 );
 
