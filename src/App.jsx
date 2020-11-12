@@ -13,12 +13,12 @@ import {
 } from './pages';
 import { useGlobalStateValue } from './context/GlobalState';
 import { TYPES } from './context/types';
+import { environments } from './environments';
 
 const App = () => {
   const [{ user }, dispatch] = useGlobalStateValue();
 
   const authListener = () => {
-    console.log('authListiner');
     fire.auth().onAuthStateChanged(user => {
       if (user) {
         return dispatch({
@@ -35,8 +35,22 @@ const App = () => {
     });
   };
 
+  const selectAll = async () => {
+    try {
+      let exampleItems = [];
+      const output = await fetch(environments.readAll);
+      const outputJSON = await output.json();
+      exampleItems = outputJSON;
+      console.log({ outputJSON });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     authListener();
+    selectAll();
+    console.log({ environments });
   }, []);
 
   return (

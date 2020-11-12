@@ -1,17 +1,17 @@
-var admin = require('firebase-admin');
-var serviceAccount = require('./permissions.json');
+const admin = require('firebase-admin');
+const serviceAccount = require('./permissions.json');
+const functions = require('firebase-functions');
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+app.use(cors({ origin: true }));
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://gamblr-8e548.firebaseio.com'
 });
 const db = admin.firestore();
-
-const functions = require('firebase-functions');
-const express = require('express');
-const cors = require('cors');
-const app = express();
-
-app.use(cors({ origin: true }));
 
 // create
 app.post('/api/create', (req, res) => {
@@ -20,9 +20,10 @@ app.post('/api/create', (req, res) => {
     try {
       await db
         .collection('items')
-        .doc('/' + req.body.id + '/')
+        // .doc('/' + req.body.id + '/')
+        .doc()
         .create({ item: req.body.item });
-      return res.status(200).send();
+      return res.status(200).send(req.body);
     } catch (error) {
       console.log(error);
       return res.status(500).send(error);
